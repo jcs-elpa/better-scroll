@@ -49,14 +49,14 @@
     (move-to-window-line-top-bottom)))
 
 ;;;###autoload
-(defun better-scroll-scroll-down ()
+(defun better-scroll-down ()
   "Scroll down."
   (interactive)
   (scroll-down)
   (better-scroll--move-to-window-line-top-bottom 'middle))
 
 ;;;###autoload
-(defun better-scroll-scroll-up ()
+(defun better-scroll-up ()
   "Scroll up."
   (interactive)
   (scroll-up)
@@ -64,13 +64,13 @@
   (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))
 
 ;;;###autoload
-(defun better-scroll-scroll-down-other-window ()
+(defun better-scroll-down-other-window ()
   "Scroll down other window."
   (interactive)
   (save-selected-window (other-window 1) (better-scroll-scroll-down)))
 
 ;;;###autoload
-(defun better-scroll-scroll-up-other-window ()
+(defun better-scroll-up-other-window ()
   "Scroll up other window."
   (interactive)
   (save-selected-window (other-window 1) (better-scroll-scroll-up)))
