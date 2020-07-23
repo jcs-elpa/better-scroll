@@ -25,6 +25,14 @@ I will recommend to bind these function to global keys like the snippet below.
 
 *P.S. `<prior>` and `<next>` is corresponds to `page up` and `page down` key.*
 
+### Aligment
+
+You can set the cursor aligment by tweaking `better-scroll-align-type` variable.
+
+```el
+(setq better-scroll-align-type 'center)  ; 'center or 'relative
+```
+
 ## Contribution
 
 If you would like to contribute to this project, you may either
