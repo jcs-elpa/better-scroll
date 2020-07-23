@@ -6,6 +6,15 @@
 
 ## Usage
 
+There are total 4 interactive functions in this package.
+
+* `better-scroll-down`
+* `better-scroll-up`
+* `better-scroll-down-other-window`
+* `better-scroll-up-other-window`
+
+I will recommend to bind these function to global keys like the snippet below.
+
 ```el
 (define-key global-map (kbd "<prior>") #better-scroll-down)
 (define-key global-map (kbd "<next>") #better-scroll-up)
@@ -13,6 +22,8 @@
 (define-key global-map (kbd "S-<prior>") #better-scroll-down-other-window)
 (define-key global-map (kbd "S-<next>") #better-scroll-up-other-window)
 ```
+
+*P.S. `<prior>` and `<next>` is corresponds to `page up` and `page down` key.*
 
 ## Contribution
 
