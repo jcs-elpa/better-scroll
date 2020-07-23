@@ -4,6 +4,10 @@
 # better-scroll
 > Improve user experience when scrolling window.
 
+Normally scroll up/down will move the cursor to the window boundry corresponding to
+the direction on how the window scrolls. This package provides it's own scrolling
+functions that will preserve cursor's position.
+
 ## Usage
 
 There are total 4 interactive functions in this package.

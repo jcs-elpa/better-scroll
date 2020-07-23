@@ -40,6 +40,11 @@
   :group 'tool
   :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/better-scroll"))
 
+(defcustom better-scroll-allow-boundry-movement t
+  "Allow cursor moves to boundry point after moving to the beginning/end of buffer."
+  :type 'boolean
+  :group 'better-scroll)
+
 (defcustom better-scroll-align-type 'center
   "Type of scroll's aligment to cursor position."
   :type '(choice  (const :tag "center" center)
@@ -47,6 +52,10 @@
   :group 'better-scroll)
 
 ;;; Util
+
+(defun better-scroll--goto-line (ln)
+  "Goto LN line number."
+  (goto-char (point-min)) (forward-line (1- ln)))
 
 (defun better-scroll--recenter-positions (type)
   "Return the recenter position value by TYPE."
@@ -62,26 +71,57 @@
   (let ((recenter-positions (better-scroll--recenter-positions type)))
     (move-to-window-line-top-bottom)))
 
+(defun better-scroll--first-display-line ()
+  "Return the first display line number."
+  (save-excursion (move-to-window-line 0) (line-number-at-pos nil t)))
+
+(defun better-scroll--line-diff-to-first ()
+  "Difference of first display line number and current line number."
+  (- (line-number-at-pos nil t) (better-scroll--first-display-line)))
+
 ;;; Core
+
+(defun better-scroll--do-relative (rel-ln)
+  "Do the relative line action by REL-LN."
+  (better-scroll--goto-line (+ (better-scroll--first-display-line) rel-ln)))
+
+(defun better-scroll--do-by-type (rel-ln)
+  "Do scroll action by passing all needed params, REL-LN."
+  (cl-case better-scroll-align-type
+    ('center
+     (better-scroll--move-to-window-line-top-bottom 'middle)
+     (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))
+    ('relative (better-scroll--do-relative rel-ln))))
+
+(defun better-scroll--move-boundry (dc fnc)
+  "Move boundry by direction (DC) and function (FNC)."
+  (let ((prev-pt (point)) (prev-col (current-column)))
+    (funcall fnc)
+    (move-to-column prev-col)
+    (when (and better-scroll-allow-boundry-movement (= (point) prev-pt))
+      (goto-char (cl-case dc ('down (point-min)) ('up (point-max)))))))
 
 ;;;###autoload
 (defun better-scroll-down ()
   "Scroll down."
   (interactive)
-  (let ((scroll-preserve-screen-position (equal better-scroll-align-type 'relative)))
-    (scroll-down)
-    (when (equal better-scroll-align-type 'center)
-      (better-scroll--move-to-window-line-top-bottom 'middle))))
+  (better-scroll--move-boundry
+   'down
+   (lambda ()
+     (let ((rel-ln (better-scroll--line-diff-to-first)))
+       (ignore-errors (scroll-down))
+       (better-scroll--do-by-type rel-ln)))))
 
 ;;;###autoload
 (defun better-scroll-up ()
   "Scroll up."
   (interactive)
-  (let ((scroll-preserve-screen-position (equal better-scroll-align-type 'relative)))
-    (scroll-up)
-    (when (equal better-scroll-align-type 'center)
-      (better-scroll--move-to-window-line-top-bottom 'middle)
-      (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))))
+  (better-scroll--move-boundry
+   'up
+   (lambda ()
+     (let ((rel-ln (better-scroll--line-diff-to-first)))
+       (ignore-errors (scroll-up))
+       (better-scroll--do-by-type rel-ln)))))
 
 ;;;###autoload
 (defun better-scroll-down-other-window ()
