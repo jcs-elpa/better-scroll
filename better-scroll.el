@@ -48,10 +48,6 @@
 
 ;;; Util
 
-(defun better-scroll--goto-line (ln)
-  "Goto LN line number."
-  (goto-char (point-min)) (forward-line (1- ln)))
-
 (defun better-scroll--recenter-positions (type)
   "Return the recenter position value by TYPE."
   (cl-case type (top '(top)) (middle '(middle)) (bottom '(bottom))))
@@ -66,41 +62,26 @@
   (let ((recenter-positions (better-scroll--recenter-positions type)))
     (move-to-window-line-top-bottom)))
 
-(defun better-scroll--first-display-line ()
-  "Return the first display line number."
-  (save-excursion (move-to-window-line 0) (line-number-at-pos nil t)))
-
-(defun better-scroll--line-diff-to-first ()
-  "Difference of first display line number and current line number."
-  (- (line-number-at-pos nil t) (better-scroll--first-display-line)))
-
 ;;; Core
-
-(defun better-scroll--do-relative (rel-ln)
-  "Do the relative line action by REL-LN."
-  (better-scroll--goto-line (+ (better-scroll--first-display-line) rel-ln)))
-
-(defun better-scroll--do-by-type (rel-ln)
-  "Do scroll action by passing all needed params, REL-LN."
-  (cl-case better-scroll-align-type
-    ('center
-     (better-scroll--move-to-window-line-top-bottom 'middle)
-     (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))
-    ('relative (better-scroll--do-relative rel-ln))))
 
 ;;;###autoload
 (defun better-scroll-down ()
   "Scroll down."
   (interactive)
-  (let ((rel-ln (better-scroll--line-diff-to-first)))
-    (scroll-down) (better-scroll--do-by-type rel-ln)))
+  (let ((scroll-preserve-screen-position (equal better-scroll-align-type 'relative)))
+    (scroll-down)
+    (when (equal better-scroll-align-type 'center)
+      (better-scroll--move-to-window-line-top-bottom 'middle))))
 
 ;;;###autoload
 (defun better-scroll-up ()
   "Scroll up."
   (interactive)
-  (let ((rel-ln (better-scroll--line-diff-to-first)))
-    (scroll-up) (better-scroll--do-by-type rel-ln)))
+  (let ((scroll-preserve-screen-position (equal better-scroll-align-type 'relative)))
+    (scroll-up)
+    (when (equal better-scroll-align-type 'center)
+      (better-scroll--move-to-window-line-top-bottom 'middle)
+      (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))))
 
 ;;;###autoload
 (defun better-scroll-down-other-window ()
