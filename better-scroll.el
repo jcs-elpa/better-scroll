@@ -34,6 +34,24 @@
 
 (require 'cl-lib)
 
+(defgroup better-scroll nil
+  "Improve user experience when scrolling window."
+  :prefix "better-scroll-"
+  :group 'tool
+  :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/better-scroll"))
+
+(defcustom better-scroll-align-type 'center
+  "Type of scroll's aligment to cursor position."
+  :type '(choice  (const :tag "center" center)
+                  (const :tag "relative" relative))
+  :group 'better-scroll)
+
+;;; Util
+
+(defun better-scroll--goto-line (ln)
+  "Goto LN line number."
+  (goto-char (point-min)) (forward-line (1- ln)))
+
 (defun better-scroll--recenter-positions (type)
   "Return the recenter position value by TYPE."
   (cl-case type (top '(top)) (middle '(middle)) (bottom '(bottom))))
@@ -48,20 +66,41 @@
   (let ((recenter-positions (better-scroll--recenter-positions type)))
     (move-to-window-line-top-bottom)))
 
+(defun better-scroll--first-display-line ()
+  "Return the first display line number."
+  (save-excursion (move-to-window-line 0) (line-number-at-pos nil t)))
+
+(defun better-scroll--line-diff-to-first ()
+  "Difference of first display line number and current line number."
+  (- (line-number-at-pos nil t) (better-scroll--first-display-line)))
+
+;;; Core
+
+(defun better-scroll--do-relative (rel-ln)
+  "Do the relative line action by REL-LN."
+  (better-scroll--goto-line (+ (better-scroll--first-display-line) rel-ln)))
+
+(defun better-scroll--do-by-type (rel-ln)
+  "Do scroll action by passing all needed params, REL-LN."
+  (cl-case better-scroll-align-type
+    ('center
+     (better-scroll--move-to-window-line-top-bottom 'middle)
+     (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))
+    ('relative (better-scroll--do-relative rel-ln))))
+
 ;;;###autoload
 (defun better-scroll-down ()
   "Scroll down."
   (interactive)
-  (scroll-down)
-  (better-scroll--move-to-window-line-top-bottom 'middle))
+  (let ((rel-ln (better-scroll--line-diff-to-first)))
+    (scroll-down) (better-scroll--do-by-type rel-ln)))
 
 ;;;###autoload
 (defun better-scroll-up ()
   "Scroll up."
   (interactive)
-  (scroll-up)
-  (better-scroll--move-to-window-line-top-bottom 'middle)
-  (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))
+  (let ((rel-ln (better-scroll--line-diff-to-first)))
+    (scroll-up) (better-scroll--do-by-type rel-ln)))
 
 ;;;###autoload
 (defun better-scroll-down-other-window ()
