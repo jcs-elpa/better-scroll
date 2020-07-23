@@ -67,13 +67,13 @@
 (defun better-scroll-down-other-window ()
   "Scroll down other window."
   (interactive)
-  (save-selected-window (other-window 1) (better-scroll-scroll-down)))
+  (save-selected-window (other-window 1) (better-scroll-down)))
 
 ;;;###autoload
 (defun better-scroll-up-other-window ()
   "Scroll up other window."
   (interactive)
-  (save-selected-window (other-window 1) (better-scroll-scroll-up)))
+  (save-selected-window (other-window 1) (better-scroll-up)))
 
 (provide 'better-scroll)
 ;;; better-scroll.el ends here
