@@ -8,6 +8,10 @@ Normally scroll up/down will move the cursor to the window boundry corresponding
 the direction on how the window scrolls. This package provides it's own scrolling
 functions that will preserve cursor's position.
 
+| Before                       | After                               |
+|:----------------------------:|:-----------------------------------:|
+|<img src="./etc/scroll.gif"/> | <img src="./etc/better-scroll.gif"/>|
+
 ## Usage
 
 There are total 4 interactive functions in this package.
