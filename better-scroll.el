@@ -40,8 +40,8 @@
   :group 'tool
   :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/better-scroll"))
 
-(defcustom better-scroll-allow-boundry-movement t
-  "Allow cursor moves to boundry point after moving to the beginning/end of buffer."
+(defcustom better-scroll-allow-boundary-movement t
+  "Allow cursor moves to boundary point after moving to the beginning/end of buffer."
   :type 'boolean
   :group 'better-scroll)
 
@@ -98,7 +98,7 @@
   (let ((prev-pt (point)) (prev-col (current-column)))
     (funcall fnc)
     (move-to-column prev-col)
-    (when (and better-scroll-allow-boundry-movement (= (point) prev-pt))
+    (when (and better-scroll-allow-boundary-movement (= (point) prev-pt))
       (goto-char (cl-case dc ('down (point-min)) ('up (point-max)))))))
 
 ;;;###autoload
