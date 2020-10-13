@@ -88,10 +88,10 @@
 (defun better-scroll--do-by-type (rel-ln)
   "Do scroll action by passing all needed params, REL-LN."
   (cl-case better-scroll-align-type
-    ('center
+    (center
      (better-scroll--move-to-window-line-top-bottom 'middle)
      (when (= (point) (point-max)) (better-scroll--recenter-top-bottom 'middle)))
-    ('relative (better-scroll--do-relative rel-ln))))
+    (relative (better-scroll--do-relative rel-ln))))
 
 (defun better-scroll--move-boundry (dc fnc)
   "Move boundry by direction (DC) and function (FNC)."
@@ -99,7 +99,7 @@
     (funcall fnc)
     (move-to-column prev-col)
     (when (and better-scroll-allow-boundary-movement (= (point) prev-pt))
-      (goto-char (cl-case dc ('down (point-min)) ('up (point-max)))))))
+      (goto-char (cl-case dc (down (point-min)) (up (point-max)))))))
 
 ;;;###autoload
 (defun better-scroll-down ()
