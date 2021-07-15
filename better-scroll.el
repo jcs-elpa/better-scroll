@@ -41,7 +41,8 @@
   :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/better-scroll"))
 
 (defcustom better-scroll-allow-boundary-movement t
-  "Allow cursor moves to boundary point after moving to the beginning/end of buffer."
+  "Allow cursor moves to boundary point after moving to the beginning/end
+of buffer."
   :type 'boolean
   :group 'better-scroll)
 
