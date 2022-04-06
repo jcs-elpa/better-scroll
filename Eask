@@ -1,6 +1,7 @@
 (package "better-scroll"
          "0.1.4"
          "Improve user experience when scrolling window")
+
 (package-file "better-scroll.el")
 
 (source "melpa")
