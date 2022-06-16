@@ -4,11 +4,10 @@
 ;; Created date 2020-07-23 18:26:34
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
-;; Description: Improve user experience when scrolling window.
-;; Keyword: scrolling scroll window better improvement
+;; URL: https://github.com/jcs-elpa/better-scroll
 ;; Version: 0.1.4
 ;; Package-Requires: ((emacs "24.3"))
-;; URL: https://github.com/jcs-elpa/better-scroll
+;; Keywords: scrolling scroll window better improvement
 
 ;; This file is NOT part of GNU Emacs.
 
