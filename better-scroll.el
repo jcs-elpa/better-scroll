@@ -7,7 +7,7 @@
 ;; URL: https://github.com/jcs-elpa/better-scroll
 ;; Version: 0.1.4
 ;; Package-Requires: ((emacs "24.3"))
-;; Keywords: scrolling scroll window better improvement
+;; Keywords: convenience scrolling scroll window better improvement
 
 ;; This file is NOT part of GNU Emacs.
 
