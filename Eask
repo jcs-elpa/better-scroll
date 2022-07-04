@@ -3,7 +3,7 @@
          "Improve user experience when scrolling window")
 
 (website-url "https://github.com/jcs-elpa/better-scroll")
-(keywords "scrolling" "scroll" "window" "better" "improvement")
+(keywords "convenience" "scrolling" "scroll" "window" "better" "improvement")
 
 (package-file "better-scroll.el")
 
