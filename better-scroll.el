@@ -135,5 +135,17 @@ of buffer."
   (interactive)
   (save-selected-window (other-window 1) (better-scroll-up)))
 
+;;; UX
+
+;;;###autoload
+(defun better-scroll-setup ()
+  "Improve scrolling UX."
+  (setq scroll-conservatively 101))
+
+;;;###autoload
+(defun better-scroll-revert ()
+  "Revert scrolling UX."
+  (setq scroll-conservatively 0))
+
 (provide 'better-scroll)
 ;;; better-scroll.el ends here
