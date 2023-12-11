@@ -15,7 +15,7 @@ functions that will preserve cursor's position.
 |:----------------------------:|:-----------------------------------:|
 |<img src="./etc/scroll.gif"/> | <img src="./etc/better-scroll.gif"/>|
 
-## Usage
+## 🔧 Usage
 
 There are total 4 interactive functions in this package.
 
