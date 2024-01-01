@@ -1,6 +1,6 @@
 ;;; better-scroll.el --- Improve user experience when scrolling window  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2020  Shen, Jen-Chieh
+;; Copyright (C) 2020-2024  Shen, Jen-Chieh
 ;; Created date 2020-07-23 18:26:34
 
 ;; Author: Shen, Jen-Chieh <jcs090218@gmail.com>
